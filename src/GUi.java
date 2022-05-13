@@ -10,7 +10,11 @@ public class GUi {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
 
-        //Creating the MenuBar and adding components
+        //labeltest
+        JLabel testLabel = new JLabel("sfdgs");
+        frame.getContentPane().add(BorderLayout.CENTER, testLabel);
+
+        //top menu
         JMenuBar mb = new JMenuBar();
         JMenu m1 = new JMenu("FILE");
         JMenu m2 = new JMenu("Help");
@@ -20,10 +24,13 @@ public class GUi {
         JMenuItem m11 = new JMenuItem("Open");
         JMenuItem m22 = new JMenuItem("Save as");
         m2.add(epicSex);
-
         m1.add(m11);
         m1.add(m22);
 
+        //menubar along left side
+        JMenuBar mb2 = new JMenuBar();
+        JMenu m4325 = new JMenu("sussy");
+        mb2.add(m4325);
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
@@ -37,7 +44,7 @@ public class GUi {
         panel.add(reset);
 
         // Text Area at the Center
-        JTextArea ta = new JTextArea();
+        //JTextArea ta = new JTextArea();
 
 
         //action listeners!!!!
@@ -50,21 +57,26 @@ public class GUi {
         send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                ta.append(tf.getText());
+                JCheckBox x = new JCheckBox(tf.getText());
+                frame.getContentPane().add(x);
+                x.setHorizontalAlignment(SwingConstants.CENTER);
                 tf.setText("");
+                frame.setVisible(false);
+                frame.setVisible(true);
             }
         });
-        epicSex.addActionListener(new ActionListener() {
+        /*epicSex.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 ta.setText("cope cope cope cope cope cope cope cope cope cope cope cope cope cope cope cope");
             }
-        });
+        });*/
 
         //Adding Components to the frame.
+        frame.getContentPane().add(BorderLayout.WEST, mb2);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.getContentPane().add(BorderLayout.NORTH, mb);
-        frame.getContentPane().add(BorderLayout.CENTER, ta);
+        //frame.getContentPane().add(BorderLayout.CENTER, ta);
         frame.setVisible(true);
     }
 }
