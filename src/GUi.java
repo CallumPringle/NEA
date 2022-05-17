@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUi {
+    public static float thing = 0;
     public static void main(String[] args) {
         //Creating the Frame
         JFrame frame = new JFrame("P.I.S.S");
@@ -11,8 +12,8 @@ public class GUi {
         frame.setSize(400, 400);
 
         //labeltest
-        JLabel testLabel = new JLabel("sfdgs");
-        frame.getContentPane().add(BorderLayout.CENTER, testLabel);
+        /*JLabel testLabel = new JLabel("sfdgs");
+        frame.getContentPane().add(BorderLayout.CENTER, testLabel);*/
 
         //top menu
         JMenuBar mb = new JMenuBar();
@@ -58,8 +59,14 @@ public class GUi {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 JCheckBox x = new JCheckBox(tf.getText());
-                frame.getContentPane().add(x);
-                x.setHorizontalAlignment(SwingConstants.CENTER);
+                if (thing == 0){x.setBounds(frame.getWidth()/2,frame.getHeight()/2,100,2);frame.add(x);}
+                else{
+                    JCheckBox y = new JCheckBox(tf.getText());
+                    y.setBounds(frame.getWidth()/2,frame.getHeight()-10,100,2);
+                    frame.add(y);
+                }
+                thing = x.getAlignmentX();
+                System.out.println(thing);
                 tf.setText("");
                 frame.setVisible(false);
                 frame.setVisible(true);
