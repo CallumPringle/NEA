@@ -19,6 +19,7 @@ public class GUi {
         JMenuBar mb = new JMenuBar();
         JMenu m1 = new JMenu("FILE");
         JMenu m2 = new JMenu("Help");
+        m1.addSeparator();
         mb.add(m1);
         mb.add(m2);
         JMenuItem epicSex = new JMenuItem("cope");
@@ -32,11 +33,12 @@ public class GUi {
         JMenuBar mb2 = new JMenuBar();
         JMenu m4325 = new JMenu("sussy");
         mb2.add(m4325);
+        m4325.addSeparator();
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel label = new JLabel("Enter Text");
-        JTextField tf = new JTextField(10); // accepts upto 10 characters
+        JTextField tf = new JTextField(20); // accepts upto 10 characters
         JButton send = new JButton("Send");
         JButton reset = new JButton("Reset");
         panel.add(label); // Components Added using Flow Layout
@@ -48,11 +50,26 @@ public class GUi {
         //JTextArea ta = new JTextArea();
 
 
+        //panel
+        JPanel panel2 = new JPanel();
+        panel2.setBounds(40,80,200,200);
+        panel2.setBackground(Color.blue);
+        JButton b1=new JButton("Button 1");
+        b1.setBounds(50,100,80,30);
+        b1.setBackground(Color.yellow);
+        JButton b2=new JButton("Button 2");
+        b2.setBounds(100,100,80,30);
+        b2.setLocation(frame.getWidth()/2,10);
+        b2.setBackground(Color.green);
+        panel2.add(b1); panel2.add(b2);
+        panel2.setLayout(null);
+        frame.add(panel2);
+
         //action listeners!!!!
         reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                tf.setText("");
+                tf.setText("");b2.setLocation(frame.getWidth()/2,10);
             }
         });
         send.addActionListener(new ActionListener() {
@@ -80,6 +97,7 @@ public class GUi {
         });*/
 
         //Adding Components to the frame.
+        //frame.getContentPane().add(BorderLayout.EAST, panel2);
         frame.getContentPane().add(BorderLayout.WEST, mb2);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.getContentPane().add(BorderLayout.NORTH, mb);
