@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 
 public class GUi {
     public static float thing = 0;
@@ -38,7 +39,7 @@ public class GUi {
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel label = new JLabel("Enter Text");
-        JTextField tf = new JTextField(20); // accepts upto 10 characters
+        JTextField tf = new JTextField(10); // accepts upto 10 characters
         JButton send = new JButton("Send");
         JButton reset = new JButton("Reset");
         panel.add(label); // Components Added using Flow Layout
@@ -61,15 +62,15 @@ public class GUi {
         b2.setBounds(100,100,80,30);
         b2.setLocation(frame.getWidth()/2,10);
         b2.setBackground(Color.green);
-        panel2.add(b1); panel2.add(b2);
-        panel2.setLayout(null);
+        /*panel2.add(b1);*/ panel2.add(b2);
+        panel2.add(b1, FlowLayout.CENTER);
         frame.add(panel2);
 
         //action listeners!!!!
         reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                tf.setText("");b2.setLocation(frame.getWidth()/2,10);
+                tf.setText("");b2.setLocation((int) Math.round(frame.getWidth()*0.75),10);
             }
         });
         send.addActionListener(new ActionListener() {
@@ -103,5 +104,8 @@ public class GUi {
         frame.getContentPane().add(BorderLayout.NORTH, mb);
         //frame.getContentPane().add(BorderLayout.CENTER, ta);
         frame.setVisible(true);
+        while(true){
+            b2.setLocation((int) Math.round(frame.getWidth()*0.75)-50,10);
+        }}
     }
-}
+
