@@ -1,14 +1,17 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeListener;
 
 public class GUi {
-    public static float thing = 0;
     public static void main(String[] args) {
         //Creating the Frame
         JFrame frame = new JFrame("P.I.S.S");
+        JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
 
@@ -23,10 +26,10 @@ public class GUi {
         m1.addSeparator();
         mb.add(m1);
         mb.add(m2);
-        JMenuItem epicSex = new JMenuItem("cope");
+        JMenuItem epicsex = new JMenuItem("cope");
         JMenuItem m11 = new JMenuItem("Open");
         JMenuItem m22 = new JMenuItem("Save as");
-        m2.add(epicSex);
+        m2.add(epicsex);
         m1.add(m11);
         m1.add(m22);
 
@@ -53,38 +56,59 @@ public class GUi {
 
         //panel
         JPanel panel2 = new JPanel();
-        panel2.setBounds(40,80,200,200);
+        BoxLayout boxlayout = new BoxLayout(panel2, BoxLayout.Y_AXIS);
+        panel2.setLayout(boxlayout);
+        panel2.setBounds(40,80,100,200);
+        panel2.setBorder(new EmptyBorder(new Insets(50, 50, 50, 50)));
         panel2.setBackground(Color.blue);
-        JButton b1=new JButton("Button 1");
+        panel2.setBorder(BorderFactory.createTitledBorder("TO DO LIST"));
+        //BoxLayout boxLayout = new BoxLayout(panel2, BoxLayout.Y_AXIS);
+        /*JButton b1=new JButton("Button 1");
         b1.setBounds(50,100,80,30);
-        b1.setBackground(Color.yellow);
-        JButton b2=new JButton("Button 2");
+        b1.setBackground(Color.yellow);*/
+        /*JButton b2=new JButton("Button 2");
         b2.setBounds(100,100,80,30);
         b2.setLocation(frame.getWidth()/2,10);
-        b2.setBackground(Color.green);
-        /*panel2.add(b1);*/ panel2.add(b2);
-        panel2.add(b1, FlowLayout.CENTER);
-        frame.add(panel2);
+        b2.setBackground(Color.green);*/
+        ///*panel2.add(b1);*/ panel2.add(b2);
+        //panel2.add(b1, FlowLayout.CENTER);
+
 
         //action listeners!!!!
+        send.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+                System.out.println( keyEvent.getKeyChar());
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+
+            }
+        });
+        epicsex.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JOptionPane.showMessageDialog(frame, "cope and seethe");
+            }
+        });
         reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                tf.setText("");b2.setLocation((int) Math.round(frame.getWidth()*0.75),10);
+                tf.setText("");
             }
         });
         send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 JCheckBox x = new JCheckBox(tf.getText());
-                if (thing == 0){x.setBounds(frame.getWidth()/2,frame.getHeight()/2,100,2);frame.add(x);}
-                else{
-                    JCheckBox y = new JCheckBox(tf.getText());
-                    y.setBounds(frame.getWidth()/2,frame.getHeight()-10,100,2);
-                    frame.add(y);
-                }
-                thing = x.getAlignmentX();
-                System.out.println(thing);
+                panel2.add(x);
+                panel2.add(Box.createVerticalGlue());
                 tf.setText("");
                 frame.setVisible(false);
                 frame.setVisible(true);
@@ -102,10 +126,10 @@ public class GUi {
         frame.getContentPane().add(BorderLayout.WEST, mb2);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.getContentPane().add(BorderLayout.NORTH, mb);
+        frame.getContentPane().add(BorderLayout.EAST, panel2);
         //frame.getContentPane().add(BorderLayout.CENTER, ta);
         frame.setVisible(true);
-        while(true){
-            b2.setLocation((int) Math.round(frame.getWidth()*0.75)-50,10);
-        }}
+
+        }
     }
 
