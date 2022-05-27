@@ -1,5 +1,10 @@
+import com.sun.org.apache.bcel.internal.generic.JsrInstruction;
+
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,28 +55,18 @@ public class GUi {
         panel.add(send);
         panel.add(reset);
 
-        // Text Area at the Center
-        //JTextArea ta = new JTextArea();
 
 
-        //panel
+        //to do list
         JPanel panel2 = new JPanel();
         BoxLayout boxlayout = new BoxLayout(panel2, BoxLayout.Y_AXIS);
         panel2.setLayout(boxlayout);
-        panel2.setBounds(40,80,100,200);
-        panel2.setBorder(new EmptyBorder(new Insets(50, 50, 50, 50)));
+        JLabel title = new JLabel("      Current Tasks:       ");
+        panel2.add(title);
         panel2.setBackground(Color.blue);
-        panel2.setBorder(BorderFactory.createTitledBorder("TO DO LIST"));
-        //BoxLayout boxLayout = new BoxLayout(panel2, BoxLayout.Y_AXIS);
-        /*JButton b1=new JButton("Button 1");
-        b1.setBounds(50,100,80,30);
-        b1.setBackground(Color.yellow);*/
-        /*JButton b2=new JButton("Button 2");
-        b2.setBounds(100,100,80,30);
-        b2.setLocation(frame.getWidth()/2,10);
-        b2.setBackground(Color.green);*/
-        ///*panel2.add(b1);*/ panel2.add(b2);
-        //panel2.add(b1, FlowLayout.CENTER);
+        panel2.setSize(frame.getWidth()/4, frame.getHeight());
+        panel2.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.MAGENTA,2,true),"TO DO LIST"));
+
 
 
         //action listeners!!!!
@@ -114,20 +109,14 @@ public class GUi {
                 frame.setVisible(true);
             }
         });
-        /*epicSex.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                ta.setText("cope cope cope cope cope cope cope cope cope cope cope cope cope cope cope cope");
-            }
-        });*/
+
+
 
         //Adding Components to the frame.
-        //frame.getContentPane().add(BorderLayout.EAST, panel2);
         frame.getContentPane().add(BorderLayout.WEST, mb2);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.getContentPane().add(BorderLayout.NORTH, mb);
         frame.getContentPane().add(BorderLayout.EAST, panel2);
-        //frame.getContentPane().add(BorderLayout.CENTER, ta);
         frame.setVisible(true);
 
         }
