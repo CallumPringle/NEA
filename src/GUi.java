@@ -1,4 +1,5 @@
 import com.sun.org.apache.bcel.internal.generic.JsrInstruction;
+import javafx.stage.Screen;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -18,7 +19,8 @@ public class GUi {
         JFrame frame = new JFrame("P.I.S.S");
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+        frame.setSize(1920, 1080);
+        frame.setMinimumSize(new Dimension(800,800));
 
         //labeltest
         /*JLabel testLabel = new JLabel("sfdgs");
@@ -62,6 +64,8 @@ public class GUi {
         BoxLayout boxlayout = new BoxLayout(panel2, BoxLayout.Y_AXIS);
         panel2.setLayout(boxlayout);
         JLabel title = new JLabel("      Current Tasks:       ");
+        title.setForeground(Color.GREEN);
+        title.setFont(new Font("Serif", Font.BOLD, frame.getWidth()/50));
         panel2.add(title);
         panel2.setBackground(Color.blue);
         panel2.setSize(frame.getWidth()/4, frame.getHeight());
@@ -112,12 +116,23 @@ public class GUi {
 
 
 
-        //Adding Components to the frame.
+        //Adding Components to the frame
         frame.getContentPane().add(BorderLayout.WEST, mb2);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.getContentPane().add(BorderLayout.NORTH, mb);
         frame.getContentPane().add(BorderLayout.EAST, panel2);
         frame.setVisible(true);
+        while(true){
+                title.setFont(new Font("Serif", Font.BOLD, frame.getWidth()/50));
+            while(true){
+                if(frame.getWidth()/30<30){
+                    title.setFont(new Font("Serif", Font.BOLD, frame.getWidth()/50));
+                }
+                else{break;}
+            }
+
+        }
+
 
         }
     }
