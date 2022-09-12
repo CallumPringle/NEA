@@ -12,4 +12,7 @@ public class Main {
         System.out.println("Current HOUR: " + calendar.get(Calendar.HOUR));
         System.out.println("Current MINUTE: " + calendar.get(Calendar.MINUTE));
         System.out.println("Current SECOND: " + calendar.get(Calendar.SECOND));    }
+    public static void calendar(){
+
+    }
 }

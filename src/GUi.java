@@ -1,5 +1,4 @@
 import com.sun.org.apache.bcel.internal.generic.JsrInstruction;
-import javafx.stage.Screen;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -12,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeListener;
+import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 
 public class GUi {
     public static void main(String[] args) {
@@ -19,8 +20,7 @@ public class GUi {
         JFrame frame = new JFrame("P.I.S.S");
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1920, 1080);
-        frame.setMinimumSize(new Dimension(800,800));
+        frame.setSize(1000, 1000);
 
         //labeltest
         /*JLabel testLabel = new JLabel("sfdgs");
@@ -48,32 +48,46 @@ public class GUi {
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
-        JLabel label = new JLabel("Enter Text");
+        JLabel label = new JLabel("enter task");
         JTextField tf = new JTextField(10); // accepts upto 10 characters
         JButton send = new JButton("Send");
+        JButton send2 = new JButton("Send");
         JButton reset = new JButton("Reset");
         panel.add(label); // Components Added using Flow Layout
         panel.add(tf);
         panel.add(send);
+        panel.add(send2);
         panel.add(reset);
-
-
+        tf.setVisible(false);
+        reset.setVisible(false);
+        send.setVisible(false);
+        send2.setVisible(false);
+        label.setVisible(false);
+        JButton newToDo = new JButton("new task");
+        panel.add(newToDo);
 
         //to do list
         JPanel panel2 = new JPanel();
         BoxLayout boxlayout = new BoxLayout(panel2, BoxLayout.Y_AXIS);
         panel2.setLayout(boxlayout);
         JLabel title = new JLabel("      Current Tasks:       ");
-        title.setForeground(Color.GREEN);
-        title.setFont(new Font("Serif", Font.BOLD, frame.getWidth()/50));
         panel2.add(title);
-        panel2.setBackground(Color.blue);
+        panel2.setBackground(Color.decode("#00ffff"));
         panel2.setSize(frame.getWidth()/4, frame.getHeight());
         panel2.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.MAGENTA,2,true),"TO DO LIST"));
 
 
-
         //action listeners!!!!
+        newToDo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                tf.setVisible(true);
+                reset.setVisible(true);
+                send.setVisible(true);
+                label.setVisible(true);
+                newToDo.setVisible(false);
+            }
+        });
         send.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
@@ -105,34 +119,47 @@ public class GUi {
         send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                JCheckBox x = new JCheckBox(tf.getText());
-                panel2.add(x);
+                JCheckBox x = new JCheckBox();
+                x.setText(tf.getText());
+                String task = tf.getText();
                 panel2.add(Box.createVerticalGlue());
                 tf.setText("");
                 frame.setVisible(false);
                 frame.setVisible(true);
+                label.setText("enter date [dd/mm/yyyy}");
+                send.setVisible(false);
+                send2.setVisible(true);
+                send2.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        if (tf.getText().length() != 10){
+                            JOptionPane.showMessageDialog(frame, "not correct format");
+                        }
+                        else{
+                            x.setText(x.getText() + " date: " + tf.getText());
+                            panel2.add(x);
+                            panel2.add(Box.createVerticalGlue());
+                            tf.setText("");
+                            frame.setVisible(false);
+                            frame.setVisible(true);
+                            label.setText("enter task");
+                            send.setVisible(true);
+                            send2.setVisible(false);
+                        }
+                    }
+                });
             }
         });
 
 
 
-        //Adding Components to the frame
+
+        //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.WEST, mb2);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.getContentPane().add(BorderLayout.NORTH, mb);
         frame.getContentPane().add(BorderLayout.EAST, panel2);
         frame.setVisible(true);
-        while(true){
-                title.setFont(new Font("Serif", Font.BOLD, frame.getWidth()/50));
-            while(true){
-                if(frame.getWidth()/30<30){
-                    title.setFont(new Font("Serif", Font.BOLD, frame.getWidth()/50));
-                }
-                else{break;}
-            }
-
-        }
-
 
         }
     }
