@@ -132,8 +132,12 @@ public class GUi {
                 send2.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent actionEvent) {
+                        int counter = 0;
+                        System.out.println(tf.getText().length());
                         if (tf.getText().length() != 10){
                             JOptionPane.showMessageDialog(frame, "not correct format");
+                            counter++;
+                            System.out.println(counter);
                         }
                         else{
                             x.setText(x.getText() + " date: " + tf.getText());
