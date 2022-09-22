@@ -11,11 +11,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 public class GUi {
+    private static String text;
+
     public static void main(String[] args) {
+        gui();
+    }
+    public static void gui() {
         //Creating the Frame
         JFrame frame = new JFrame("P.I.S.S");
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -65,6 +71,9 @@ public class GUi {
         label.setVisible(false);
         JButton newToDo = new JButton("new task");
         panel.add(newToDo);
+
+
+
 
         //to do list
         JPanel panel2 = new JPanel();
@@ -116,12 +125,31 @@ public class GUi {
                 tf.setText("");
             }
         });
+        send2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (tf.getText().length() != 10){
+                    JOptionPane.showMessageDialog(frame, "not correct format");
+                }
+                else{
+                    text = text + " date: " + tf.getText();
+                    JCheckBox x = new JCheckBox();
+                    x.setText(text);
+                    panel2.add(x);
+                    panel2.add(Box.createVerticalGlue());
+                    tf.setText("");
+                    frame.setVisible(false);
+                    frame.setVisible(true);
+                    label.setText("enter task");
+                    send.setVisible(true);
+                    send2.setVisible(false);
+                }
+            }
+        });
         send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                JCheckBox x = new JCheckBox();
-                x.setText(tf.getText());
-                String task = tf.getText();
+                text = tf.getText();
                 panel2.add(Box.createVerticalGlue());
                 tf.setText("");
                 frame.setVisible(false);
@@ -129,25 +157,7 @@ public class GUi {
                 label.setText("enter date [dd/mm/yyyy}");
                 send.setVisible(false);
                 send2.setVisible(true);
-                send2.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent actionEvent) {
-                        if (tf.getText().length() != 10){
-                            JOptionPane.showMessageDialog(frame, "not correct format");
-                        }
-                        else{
-                            x.setText(x.getText() + " date: " + tf.getText());
-                            panel2.add(x);
-                            panel2.add(Box.createVerticalGlue());
-                            tf.setText("");
-                            frame.setVisible(false);
-                            frame.setVisible(true);
-                            label.setText("enter task");
-                            send.setVisible(true);
-                            send2.setVisible(false);
-                        }
-                    }
-                });
+
             }
         });
 
