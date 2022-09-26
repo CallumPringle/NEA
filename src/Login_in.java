@@ -28,13 +28,24 @@ public class Login_in {
         frame.add(username);
 
         //password
-        JTextField pWordtf = new JTextField(20);
+        JPasswordField pWordtf = new JPasswordField(20);
         JLabel password = new JLabel("Password:");
         pWordtf.setBounds(70,50,300,20);
         password.setBounds(0,pWordtf.getY()-5,100,30);
-        System.out.println(pWordtf.getHeight() + " user" + tf.getHeight());
         frame.add(password);
         frame.add(pWordtf);
+
+        //submit
+        JButton button = new JButton("Submit");
+        button.setBounds((frame.getWidth()/2)-50, 75, 100,30);
+        frame.add(button);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.setVisible(false);
+                GUi.gui();
+            }
+        });
 
 
         frame.setLayout(null);
