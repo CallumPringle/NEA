@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
@@ -35,15 +38,31 @@ public class Login_in {
         frame.add(password);
         frame.add(pWordtf);
 
+        JButton registerB = new JButton("Register");
+        registerB.setBounds((frame.getWidth()/2), 75, 100,30);
+        frame.add(registerB);
+        registerB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.setVisible(false);
+                register.rigster();
+            }
+        });
+
         //submit
         JButton button = new JButton("Submit");
-        button.setBounds((frame.getWidth()/2)-50, 75, 100,30);
+        button.setBounds((frame.getWidth()/2)-100, 75, 75,30);
         frame.add(button);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                frame.setVisible(false);
-                GUi.gui();
+                if(Objects.equals(pWordtf.getText(), "femboys")){
+                    frame.setVisible(false);
+                    GUi.gui();
+                }
+                else{
+                    JOptionPane.showMessageDialog(frame, "i cum blood");
+                }
             }
         });
 

@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
@@ -21,6 +23,16 @@ public class GUi {
     public static void main(String[] args) {
         gui();
     }
+    private static boolean checkIfDateIsValid(String date) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        format.setLenient(false);
+        try {
+            format.parse(date);
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
+    }
     public static void gui() {
         //Creating the Frame
         JFrame frame = new JFrame("P.I.S.S");
@@ -28,9 +40,6 @@ public class GUi {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 1000);
 
-        //labeltest
-        /*JLabel testLabel = new JLabel("sfdgs");
-        frame.getContentPane().add(BorderLayout.CENTER, testLabel);*/
 
         //top menu
         JMenuBar mb = new JMenuBar();
@@ -128,10 +137,7 @@ public class GUi {
         send2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (tf.getText().length() != 10){
-                    JOptionPane.showMessageDialog(frame, "not correct format");
-                }
-                else{
+                if ((checkIfDateIsValid(tf.getText()))){
                     text = text + " date: " + tf.getText();
                     JCheckBox x = new JCheckBox();
                     x.setText(text);
@@ -143,6 +149,9 @@ public class GUi {
                     label.setText("enter task");
                     send.setVisible(true);
                     send2.setVisible(false);
+                }
+                else{
+                    JOptionPane.showMessageDialog(frame, "not correct format");
                 }
             }
         });
