@@ -82,8 +82,6 @@ public class GUi {
         panel.add(newToDo);
 
 
-
-
         //to do list
         JPanel panel2 = new JPanel();
         BoxLayout boxlayout = new BoxLayout(panel2, BoxLayout.Y_AXIS);
@@ -139,6 +137,8 @@ public class GUi {
             public void actionPerformed(ActionEvent actionEvent) {
                 if ((checkIfDateIsValid(tf.getText()))){
                     text = text + " date: " + tf.getText();
+                    tasks task = new tasks(tf.getText());
+                    task.printDate();
                     JCheckBox x = new JCheckBox();
                     x.setText(text);
                     panel2.add(x);
