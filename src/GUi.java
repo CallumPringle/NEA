@@ -137,8 +137,9 @@ public class GUi {
             public void actionPerformed(ActionEvent actionEvent) {
                 if ((checkIfDateIsValid(tf.getText()))){
                     text = text + " date: " + tf.getText();
-                    tasks task = new tasks(tf.getText());
+                    tasks task = new tasks(tf.getText(), tf.getText());
                     task.printDate();
+                    System.out.println(task.getDate());
                     JCheckBox x = new JCheckBox();
                     x.setText(text);
                     panel2.add(x);

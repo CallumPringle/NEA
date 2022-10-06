@@ -4,7 +4,8 @@ public class tasks {
     public String month;
     public String year;
 
-    public tasks(String text) {
+    public tasks(String text,String date) {
+        this.date = date;
         String[] triPoloski  = text.split("/");
         this.day = triPoloski[0];
         this.month = triPoloski[1];
