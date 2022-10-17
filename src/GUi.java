@@ -6,10 +6,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -150,6 +147,35 @@ public class GUi {
                     label.setText("enter task");
                     send.setVisible(true);
                     send2.setVisible(false);
+                    x.addItemListener(new ItemListener() {
+                        @Override
+                        public void itemStateChanged(ItemEvent itemEvent) {
+                            if(itemEvent.getStateChange()==1){
+                                JDialog d = new JDialog(frame, "Confirm", true);
+                                JButton yer = new JButton("Confirm");
+                                JButton naw = new JButton("naw");
+                                yer.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent actionEvent) {
+                                        x.setVisible(false);
+                                        d.setVisible(false);
+                                    }
+                                });
+                                naw.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent actionEvent) {
+                                    d.setVisible(false);
+                                    }
+                                });
+                                d.setLayout(new FlowLayout());
+                                d.setBounds((frame.getWidth()/2)-150,(frame.getHeight()/2)-50,300,100);
+                                d.add(new Label("Are you sure this task is fully complete?"));
+                                d.add(yer);
+                                d.add(naw);
+                                d.setVisible(true);
+                            }
+                        }
+                    });
                 }
                 else{
                     JOptionPane.showMessageDialog(frame, "not correct format");
