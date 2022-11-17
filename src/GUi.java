@@ -142,8 +142,6 @@ public class GUi {
                     panel2.add(x);
                     panel2.add(Box.createVerticalGlue());
                     tf.setText("");
-                    frame.setVisible(false);
-                    frame.setVisible(true);
                     label.setText("enter task");
                     send.setVisible(true);
                     send2.setVisible(false);
@@ -188,8 +186,6 @@ public class GUi {
                 text = tf.getText();
                 panel2.add(Box.createVerticalGlue());
                 tf.setText("");
-                frame.setVisible(false);
-                frame.setVisible(true);
                 label.setText("enter date [dd/mm/yyyy}");
                 send.setVisible(false);
                 send2.setVisible(true);
