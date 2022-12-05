@@ -1,25 +1,18 @@
-import com.sun.org.apache.bcel.internal.generic.JsrInstruction;
-
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
 
 public class GUi {
     private static String text;
 
-    public static void main(String[] args) {
-        gui();
-    }
+    public static void main(String[] args) {gui();}
+
     private static boolean checkIfDateIsValid(String date) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         format.setLenient(false);
@@ -30,6 +23,17 @@ public class GUi {
         }
         return true;
     }
+    public static void loadCheckboxes(JPanel panel, JFrame frame) throws SQLException {
+        ResultSet rs = tasksAccessDatabase.loadTasks();
+        while((rs!=null) && (rs.next())){
+            JCheckBox x = new JCheckBox();
+            x.setText(rs.getString(1));
+            panel.add(x);
+            checkCheckbox(x, frame);
+        }
+    }
+
+
     public static void gui() {
         //Creating the Frame
         JFrame frame = new JFrame("P.I.S.S");
@@ -88,7 +92,9 @@ public class GUi {
         panel2.setBackground(Color.decode("#00ffff"));
         panel2.setSize(frame.getWidth()/4, frame.getHeight());
         panel2.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.MAGENTA,2,true),"TO DO LIST"));
-
+        try{loadCheckboxes(panel2,frame);}catch(Exception e){
+            System.out.println(e);
+        }
 
         //action listeners!!!!
         newToDo.addActionListener(new ActionListener() {
@@ -99,22 +105,6 @@ public class GUi {
                 send.setVisible(true);
                 label.setVisible(true);
                 newToDo.setVisible(false);
-            }
-        });
-        send.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent keyEvent) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent keyEvent) {
-                System.out.println( keyEvent.getKeyChar());
-            }
-
-            @Override
-            public void keyReleased(KeyEvent keyEvent) {
-
             }
         });
         epicsex.addActionListener(new ActionListener() {
@@ -145,35 +135,7 @@ public class GUi {
                     label.setText("enter task");
                     send.setVisible(true);
                     send2.setVisible(false);
-                    x.addItemListener(new ItemListener() {
-                        @Override
-                        public void itemStateChanged(ItemEvent itemEvent) {
-                            if(itemEvent.getStateChange()==1){
-                                JDialog d = new JDialog(frame, "Confirm", true);
-                                JButton yer = new JButton("Confirm");
-                                JButton naw = new JButton("naw");
-                                yer.addActionListener(new ActionListener() {
-                                    @Override
-                                    public void actionPerformed(ActionEvent actionEvent) {
-                                        x.setVisible(false);
-                                        d.setVisible(false);
-                                    }
-                                });
-                                naw.addActionListener(new ActionListener() {
-                                    @Override
-                                    public void actionPerformed(ActionEvent actionEvent) {
-                                    d.setVisible(false);
-                                    }
-                                });
-                                d.setLayout(new FlowLayout());
-                                d.setBounds((frame.getWidth()/2)-150,(frame.getHeight()/2)-50,300,100);
-                                d.add(new Label("Are you sure this task is fully complete?"));
-                                d.add(yer);
-                                d.add(naw);
-                                d.setVisible(true);
-                            }
-                        }
-                    });
+                    checkCheckbox(x, frame);
                 }
                 else{
                     JOptionPane.showMessageDialog(frame, "not correct format");
@@ -184,6 +146,7 @@ public class GUi {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 text = tf.getText();
+                tasksAccessDatabase.tasksIntoDatabase(tf.getText());
                 panel2.add(Box.createVerticalGlue());
                 tf.setText("");
                 label.setText("enter date [dd/mm/yyyy}");
@@ -204,5 +167,38 @@ public class GUi {
         frame.setVisible(true);
 
         }
+
+    private static void checkCheckbox(JCheckBox x, JFrame frame) {
+        x.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                if(itemEvent.getStateChange()==1){
+                    JDialog d = new JDialog(frame, "Confirm", true);
+                    JButton yer = new JButton("Confirm");
+                    JButton naw = new JButton("naw");
+                    yer.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent actionEvent) {
+                            tasksAccessDatabase.deleteTask(x.getText().split(" date:")[0]);
+                            x.setVisible(false);
+                            d.setVisible(false);
+                        }
+                    });
+                    naw.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent actionEvent) {
+                        d.setVisible(false);
+                        }
+                    });
+                    d.setLayout(new FlowLayout());
+                    d.setBounds((frame.getWidth()/2)-150,(frame.getHeight()/2)-50,300,100);
+                    d.add(new Label("Are you sure this task is fully complete?"));
+                    d.add(yer);
+                    d.add(naw);
+                    d.setVisible(true);
+                }
+            }
+        });
     }
+}
 

@@ -1,14 +1,44 @@
+
 import java.sql.*;
 public class tasksAccessDatabase {
+    public static ResultSet loadTasks(){
+        try{
+        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
+        Connection conn = DriverManager.getConnection("jdbc:ucanaccess://X:\\computer science\\java projects\\NEA\\src\\Tasks.accdb");//Establishing Connection
+        Statement stmt = conn.createStatement();
+        System.out.println("Connected Successfully");
+        String selTable = "select taskDetail from tasksTable";
+        stmt.execute(selTable);
+        return stmt.getResultSet();
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+
     public static void tasksIntoDatabase(String task){
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
             Connection conn = DriverManager.getConnection("jdbc:ucanaccess://X:\\computer science\\java projects\\NEA\\src\\Tasks.accdb");//Establishing Connection
-            PreparedStatement pstmt = conn.prepareStatement("insert into tasksTable (ID,test) values(null,'"+task+"')");
+            PreparedStatement pstmt = conn.prepareStatement("insert into tasksTable (ID,taskDetail) values(null,'"+task+"')");
             System.out.println("Connected Successfully");
 
             //String insrtTask = "insert into tasksTable (ID,test) values(null,task);";
             //System.out.println("The SQL statement is: " + insrtTask + "\n"); // Echo For debugging
+            pstmt.executeUpdate();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    public static void deleteTask(String task){
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
+            Connection conn = DriverManager.getConnection("jdbc:ucanaccess://X:\\computer science\\java projects\\NEA\\src\\Tasks.accdb");//Establishing Connection
+            PreparedStatement pstmt = conn.prepareStatement("delete from tasksTable where taskDetail= '"+task+"'");
+            System.out.println("Connected Successfully");
             pstmt.executeUpdate();
         }
         catch(Exception e){
