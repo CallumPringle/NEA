@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 
 public class GUi {
     private static String text;
@@ -23,8 +22,12 @@ public class GUi {
         }
         return true;
     }
+    public static Boolean checkIfTimeIsValid(String time){
+        String[] splitTime = time.split(":");
+        return Integer.parseInt(splitTime[0]) <= 23 && Integer.parseInt(splitTime[1]) <= 59 && Integer.parseInt(splitTime[0]) >= 0 && Integer.parseInt(splitTime[1]) >= 0;
+    }
     public static void loadCheckboxes(JPanel panel, JFrame frame) throws SQLException {
-        ResultSet rs = tasksAccessDatabase.loadTasks();
+        ResultSet rs = TasksDatabase.loadTasks();
         while((rs!=null) && (rs.next())){
             JCheckBox x = new JCheckBox();
             x.setText(rs.getString(1));
@@ -66,18 +69,21 @@ public class GUi {
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel label = new JLabel("enter task");
         JTextField tf = new JTextField(10); // accepts upto 10 characters
-        JButton send = new JButton("Send");
-        JButton send2 = new JButton("Send");
+        JButton sendTask = new JButton("Send");
+        JButton sendDate = new JButton("Send");
+        JButton sendTime = new JButton("Send");
         JButton reset = new JButton("Reset");
         panel.add(label); // Components Added using Flow Layout
         panel.add(tf);
-        panel.add(send);
-        panel.add(send2);
+        panel.add(sendTask);
+        panel.add(sendDate);
+        panel.add(sendTime);
         panel.add(reset);
         tf.setVisible(false);
         reset.setVisible(false);
-        send.setVisible(false);
-        send2.setVisible(false);
+        sendTask.setVisible(false);
+        sendDate.setVisible(false);
+        sendTime.setVisible(false);
         label.setVisible(false);
         JButton newToDo = new JButton("new task");
         panel.add(newToDo);
@@ -102,7 +108,7 @@ public class GUi {
             public void actionPerformed(ActionEvent actionEvent) {
                 tf.setVisible(true);
                 reset.setVisible(true);
-                send.setVisible(true);
+                sendTask.setVisible(true);
                 label.setVisible(true);
                 newToDo.setVisible(false);
             }
@@ -119,39 +125,54 @@ public class GUi {
                 tf.setText("");
             }
         });
-        send2.addActionListener(new ActionListener() {
+        sendTime.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if ((checkIfDateIsValid(tf.getText()))){
-                    text = text + " date: " + tf.getText();
-                    tasks task = new tasks(tf.getText(), tf.getText());
-                    task.printDate();
-                    System.out.println(task.getDate());
+                if(checkIfTimeIsValid(tf.getText())){
+                    text = text + " time: " + tf.getText();
                     JCheckBox x = new JCheckBox();
                     x.setText(text);
                     panel2.add(x);
                     panel2.add(Box.createVerticalGlue());
+                    checkCheckbox(x, frame);
                     tf.setText("");
                     label.setText("enter task");
-                    send.setVisible(true);
-                    send2.setVisible(false);
-                    checkCheckbox(x, frame);
+                    sendTime.setVisible(false);
+                    sendTask.setVisible(true);
                 }
                 else{
                     JOptionPane.showMessageDialog(frame, "not correct format");
                 }
             }
         });
-        send.addActionListener(new ActionListener() {
+        sendDate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if ((checkIfDateIsValid(tf.getText()))){
+                    tasks task = new tasks(tf.getText(), tf.getText());
+                    TasksDatabase.tasksIntoDatabase(text,task);
+                    text = text + " date: " + tf.getText();
+                    task.printDate();
+                    System.out.println(task.getDate());
+                    tf.setText("");
+                    label.setText("enter time (hh:mm)");
+                    sendTime.setVisible(true);
+                    sendDate.setVisible(false);
+                }
+                else{
+                    JOptionPane.showMessageDialog(frame, "not correct format");
+                }
+            }
+        });
+        sendTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 text = tf.getText();
-                tasksAccessDatabase.tasksIntoDatabase(tf.getText());
                 panel2.add(Box.createVerticalGlue());
                 tf.setText("");
                 label.setText("enter date [dd/mm/yyyy}");
-                send.setVisible(false);
-                send2.setVisible(true);
+                sendTask.setVisible(false);
+                sendDate.setVisible(true);
 
             }
         });
@@ -179,7 +200,7 @@ public class GUi {
                     yer.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent actionEvent) {
-                            tasksAccessDatabase.deleteTask(x.getText().split(" date:")[0]);
+                            TasksDatabase.deleteTask(x.getText().split(" date:")[0]);
                             x.setVisible(false);
                             d.setVisible(false);
                         }
