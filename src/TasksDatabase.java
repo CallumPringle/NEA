@@ -1,12 +1,14 @@
 
 import java.sql.*;
+import java.time.LocalDate;
+
 public class TasksDatabase {
     public static ResultSet loadTasks(){
         try{
         Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
-        Connection conn = DriverManager.getConnection("jdbc:ucanaccess://X:\\computer science\\java projects\\NEA\\src\\Tasks.accdb");//Establishing Connection
+        Connection conn = DriverManager.getConnection("jdbc:ucanaccess://C:\\Users\\pring\\IdeaProjects\\NEA\\calendar\\src\\Tasks.accdb");//Establishing Connection
         Statement stmt = conn.createStatement();
-        String selTable = "select taskDetail from tasksTable";
+        String selTable = "select taskDetail,taskDate from tasksTable";
         stmt.execute(selTable);
         return stmt.getResultSet();
 
@@ -17,13 +19,14 @@ public class TasksDatabase {
         }
     }
 
-    public static void tasksIntoDatabase(String task, tasks tasks){
+    public static void tasksIntoDatabase(String task,tasks tasks){
         try {
-            Date test = new Date(tasks.getDay(),tasks.getMonth(),tasks.getYear());
+            LocalDate.of(2004,12,31);
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
-            Connection conn = DriverManager.getConnection("jdbc:ucanaccess://X:\\computer science\\java projects\\NEA\\src\\Tasks.accdb");//Establishing Connection
-            PreparedStatement pstmt = conn.prepareStatement("insert into tasksTable (ID,taskDetail,taskDateTime) values(null,'"+task+"','"+test.getTime()+"')");
+            Connection conn = DriverManager.getConnection("jdbc:ucanaccess://C:\\Users\\pring\\IdeaProjects\\NEA\\calendar\\src\\Tasks.accdb");//Establishing Connection
+            PreparedStatement pstmt = conn.prepareStatement("insert into tasksTable (ID,taskDetail,taskDateTime) values(null,'"+task+"','"+LocalDate.of(tasks.getYear(),tasks.getMonth(),tasks.getDay())+"')");
             pstmt.executeUpdate();
+            System.out.println("task added");
         }
         catch(Exception e){
             System.out.println(e);
@@ -32,7 +35,7 @@ public class TasksDatabase {
     public static void deleteTask(String task){
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
-            Connection conn = DriverManager.getConnection("jdbc:ucanaccess://X:\\computer science\\java projects\\NEA\\src\\Tasks.accdb");//Establishing Connection
+            Connection conn = DriverManager.getConnection("jdbc:ucanaccess://C:\\Users\\pring\\IdeaProjects\\NEA\\calendar\\src\\Tasks.accdb");//Establishing Connection
             PreparedStatement pstmt = conn.prepareStatement("delete from tasksTable where taskDetail= '"+task+"'");
             pstmt.executeUpdate();
         }

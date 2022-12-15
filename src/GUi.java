@@ -11,7 +11,11 @@ public class GUi {
     private static String text;
 
     public static void main(String[] args) {gui();}
-
+    public static String formatDate(String date){
+        date = date.split(" ")[0].replace('-','/');
+        date = date.split("/")[2] + "/" +date.split("/")[1] +"/" + date.split("/")[0];
+        return date;
+    }
     private static boolean checkIfDateIsValid(String date) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         format.setLenient(false);
@@ -30,7 +34,8 @@ public class GUi {
         ResultSet rs = TasksDatabase.loadTasks();
         while((rs!=null) && (rs.next())){
             JCheckBox x = new JCheckBox();
-            x.setText(rs.getString(1));
+            String formattedDate = formatDate(rs.getString(2));
+            x.setText(rs.getString(1)+" date: "+ formattedDate);
             panel.add(x);
             checkCheckbox(x, frame);
         }
