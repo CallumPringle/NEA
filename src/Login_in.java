@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeListener;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,13 +56,17 @@ public class Login_in {
         frame.add(button);
         button.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if(Objects.equals(pWordtf.getText(), "femboys")){
-                    frame.setVisible(false);
-                    GUi.gui();
-                }
-                else{
-                    JOptionPane.showMessageDialog(frame, "i cum blood");
+            public void actionPerformed(ActionEvent actionEvent){
+                try{
+                while(TasksDatabase.retrieveUsername()!=null && (Objects.requireNonNull(TasksDatabase.retrieveUsername()).next())) {
+                            if(Objects.equals(Objects.requireNonNull(TasksDatabase.retrieveUsername()).getString(1), tf.getText())){
+                                if(Objects.equals(Objects.requireNonNull(TasksDatabase.retrievePassword(tf.getText())).getString(1), pWordtf.getText())){
+                                    System.out.println("that is sussy asf");
+                                }
+                            }
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                 }
             }
         });
