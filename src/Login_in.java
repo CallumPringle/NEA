@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -58,10 +59,14 @@ public class Login_in {
             @Override
             public void actionPerformed(ActionEvent actionEvent){
                 try{
-                while(TasksDatabase.retrieveUsername()!=null && (Objects.requireNonNull(TasksDatabase.retrieveUsername()).next())) {
-                            if(Objects.equals(Objects.requireNonNull(TasksDatabase.retrieveUsername()).getString(1), tf.getText())){
-                                if(Objects.equals(Objects.requireNonNull(TasksDatabase.retrievePassword(tf.getText())).getString(1), pWordtf.getText())){
-                                    System.out.println("that is sussy asf");
+                    ResultSet rs = TasksDatabase.retrieveUsername();
+                while((rs!=null) && (rs.next())) {
+                            if(Objects.equals(rs.getString(1), tf.getText())){
+                                ResultSet pw = TasksDatabase.retrievePassword(tf.getText());
+                                pw.next();
+                                if(Objects.equals(pw.getString(1), pWordtf.getText())){
+                                    frame.setVisible(false);
+                                    GUi.gui();
                                 }
                             }
                         }

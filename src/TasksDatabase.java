@@ -46,7 +46,18 @@ public class TasksDatabase {
             return null;
         }
     }
-
+    public static void registerUser(String username,String password){
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
+            Connection conn = DriverManager.getConnection("jdbc:ucanaccess://src/Tasks.accdb");//Establishing Connection
+            PreparedStatement pstmt = conn.prepareStatement("insert into loginDetails (ID,username,password) values(null,'"+username+"','"+password+"')");
+            pstmt.executeUpdate();
+            System.out.println("details added");
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
     public static void tasksIntoDatabase(String task,tasks tasks){
         try {
             LocalDate.of(2004,12,31);

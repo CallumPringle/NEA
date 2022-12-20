@@ -36,8 +36,10 @@ public class register {
             if(pWordtf.getText().length() < 7){
                 JOptionPane.showMessageDialog(frame, "password must be at least 8 digits long");
                 pWordtf.setText("");
+
             }
             else{
+                TasksDatabase.registerUser(tf.getText(),pWordtf.getText());
                 frame.setVisible(false);
                 Login_in.login();
             }
