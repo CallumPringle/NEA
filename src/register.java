@@ -2,9 +2,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class register {
+    public static Boolean checkDupedUsername(String username) throws SQLException {
+        ResultSet rs = TasksDatabase.retrieveUsername();
+        rs.next();
+        return Objects.equals(username, rs.getString(1));
+        }
+
+
     public static void rigster(){
     JFrame frame = new JFrame("Register");
         frame.setSize(400,150);
@@ -33,15 +42,21 @@ public class register {
         button.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            if(pWordtf.getText().length() < 7){
+            try{
+            if(pWordtf.getText().length() < 8){
                 JOptionPane.showMessageDialog(frame, "password must be at least 8 digits long");
                 pWordtf.setText("");
 
+            }
+            else if(checkDupedUsername(tf.getText())){
+                JOptionPane.showMessageDialog(frame,"username already exists");
             }
             else{
                 TasksDatabase.registerUser(tf.getText(),pWordtf.getText());
                 frame.setVisible(false);
                 Login_in.login();
+            }}catch(Exception e){
+                System.out.println(e);
             }
         }
     });
