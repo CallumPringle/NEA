@@ -1,4 +1,3 @@
-
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -19,12 +18,12 @@ public class TasksDatabase {
     }
     public static ResultSet retrievePassword(String username)  {
         try{
-        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
-        Connection conn = DriverManager.getConnection("jdbc:ucanaccess://src/Tasks.accdb");//Establishing Connection
-        Statement stmt = conn.createStatement();
-        String q = "select password from loginDetails where username= '"+username+"'";
-        stmt.execute(q);
-        return stmt.getResultSet();}
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
+            Connection conn = DriverManager.getConnection("jdbc:ucanaccess://src/Tasks.accdb");//Establishing Connection
+            Statement stmt = conn.createStatement();
+            String q = "select password from loginDetails where username= '"+username+"'";
+            stmt.execute(q);
+            return stmt.getResultSet();}
         catch(Exception e){
             System.out.println(e);
             return null;
@@ -33,12 +32,12 @@ public class TasksDatabase {
     }
     public static ResultSet loadTasks(){
         try{
-        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
-        Connection conn = DriverManager.getConnection("jdbc:ucanaccess://src/Tasks.accdb");//Establishing Connection
-        Statement stmt = conn.createStatement();
-        String selTable = "select taskDetail,taskDate from tasksTable";
-        stmt.execute(selTable);
-        return stmt.getResultSet();
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
+            Connection conn = DriverManager.getConnection("jdbc:ucanaccess://src/Tasks.accdb");//Establishing Connection
+            Statement stmt = conn.createStatement();
+            String selTable = "select taskDetail,taskDate from tasksTable";
+            stmt.execute(selTable);
+            return stmt.getResultSet();
 
         }
         catch (Exception e){
