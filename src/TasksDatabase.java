@@ -49,7 +49,7 @@ public class TasksDatabase {
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
             Connection conn = DriverManager.getConnection("jdbc:ucanaccess://src/Tasks.accdb");//Establishing Connection
-            PreparedStatement pstmt = conn.prepareStatement("insert into loginDetails (ID,username,password) values(null,'"+username+"','"+password+"')");
+            PreparedStatement pstmt = conn.prepareStatement("insert into loginDetails (username,password) values('"+username+"','"+password+"')");
             pstmt.executeUpdate();
             System.out.println("details added");
         }
@@ -57,12 +57,12 @@ public class TasksDatabase {
             System.out.println(e);
         }
     }
-    public static void tasksIntoDatabase(String task,tasks tasks){
+    public static void tasksIntoDatabase(String task,tasks tasks, String username){
         try {
             LocalDate.of(2004,12,31);
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
             Connection conn = DriverManager.getConnection("jdbc:ucanaccess://src/Tasks.accdb");//Establishing Connection
-            PreparedStatement pstmt = conn.prepareStatement("insert into tasksTable (ID,taskDetail,taskDate) values(null,'"+task+"','"+LocalDate.of(tasks.getYear(),tasks.getMonth(),tasks.getDay())+"')");
+            PreparedStatement pstmt = conn.prepareStatement("insert into tasksTable (ID,taskDetail,taskDate,username) values(null,'"+task+"','"+LocalDate.of(tasks.getYear(),tasks.getMonth(),tasks.getDay())+"','"+username+"')");
             pstmt.executeUpdate();
             System.out.println("task added");
         }

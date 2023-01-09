@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 public class GUi {
     private static String text;
 
-    public static void main(String[] args) {gui();}
+    public static void main(String[] args) {gui("test");}
     public static String formatDate(String date){
         date = date.split(" ")[0].replace('-','/');
         date = date.split("/")[2] + "/" +date.split("/")[1] +"/" + date.split("/")[0];
@@ -42,7 +42,7 @@ public class GUi {
     }
 
 
-    public static void gui() {
+    public static void gui(String username) {
         //Creating the Frame
         JFrame frame = new JFrame("P.I.S.S");
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -155,7 +155,7 @@ public class GUi {
             public void actionPerformed(ActionEvent actionEvent) {
                 if ((checkIfDateIsValid(tf.getText()))){
                     tasks task = new tasks(tf.getText(), tf.getText());
-                    TasksDatabase.tasksIntoDatabase(text,task);
+                    TasksDatabase.tasksIntoDatabase(text,task,username);
                     text = text + " date: " + tf.getText();
                     task.printDate();
                     System.out.println(task.getDate());
@@ -169,7 +169,8 @@ public class GUi {
                 }
             }
         });
-        sendTask.addActionListener(new ActionListener() {
+
+        ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 text = tf.getText();
@@ -180,7 +181,10 @@ public class GUi {
                 sendDate.setVisible(true);
 
             }
-        });
+        };
+
+        sendTask.addActionListener(al);
+
 
 
 

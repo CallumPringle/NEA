@@ -66,7 +66,7 @@ public class Login_in {
                                 pw.next();
                                 if(Objects.equals(pw.getString(1), pWordtf.getText())){
                                     frame.setVisible(false);
-                                    GUi.gui();
+                                    GUi.gui(tf.getText());
                                 }
                             }
                         }
