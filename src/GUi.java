@@ -182,7 +182,7 @@ public class GUi {
 
             }
         };
-
+        tf.addActionListener(al);
         sendTask.addActionListener(al);
 
 
