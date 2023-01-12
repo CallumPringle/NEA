@@ -30,12 +30,12 @@ public class TasksDatabase {
         }
 
     }
-    public static ResultSet loadTasks(){
+    public static ResultSet loadTasks(String username){
         try{
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
             Connection conn = DriverManager.getConnection("jdbc:ucanaccess://src/Tasks.accdb");//Establishing Connection
             Statement stmt = conn.createStatement();
-            String selTable = "select taskDetail,taskDate from tasksTable";
+            String selTable = "select taskDetail,taskDate from tasksTable where username= '"+username+"'";
             stmt.execute(selTable);
             return stmt.getResultSet();
 

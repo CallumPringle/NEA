@@ -64,7 +64,7 @@ public class Login_in {
                             if(Objects.equals(rs.getString(1), tf.getText())){
                                 ResultSet pw = TasksDatabase.retrievePassword(tf.getText());
                                 pw.next();
-                                if(Objects.equals(pw.getString(1), pWordtf.getText())){
+                                if(Objects.equals(pw.getString(1), register.createHash(pWordtf.getText()))){
                                     frame.setVisible(false);
                                     GUi.gui(tf.getText());
                                 }

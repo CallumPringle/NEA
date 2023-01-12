@@ -30,8 +30,8 @@ public class GUi {
         String[] splitTime = time.split(":");
         return Integer.parseInt(splitTime[0]) <= 23 && Integer.parseInt(splitTime[1]) <= 59 && Integer.parseInt(splitTime[0]) >= 0 && Integer.parseInt(splitTime[1]) >= 0;
     }
-    public static void loadCheckboxes(JPanel panel, JFrame frame) throws SQLException {
-        ResultSet rs = TasksDatabase.loadTasks();
+    public static void loadCheckboxes(JPanel panel, JFrame frame, String username) throws SQLException {
+        ResultSet rs = TasksDatabase.loadTasks(username);
         while((rs!=null) && (rs.next())){
             JCheckBox x = new JCheckBox();
             String formattedDate = formatDate(rs.getString(2));
@@ -103,7 +103,7 @@ public class GUi {
         panel2.setBackground(Color.decode("#00ffff"));
         panel2.setSize(frame.getWidth()/4, frame.getHeight());
         panel2.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.MAGENTA,2,true),"TO DO LIST"));
-        try{loadCheckboxes(panel2,frame);}catch(Exception e){
+        try{loadCheckboxes(panel2,frame,username);}catch(Exception e){
             System.out.println(e);
         }
 
@@ -150,7 +150,7 @@ public class GUi {
                 }
             }
         });
-        sendDate.addActionListener(new ActionListener() {
+        ActionListener al2 = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if ((checkIfDateIsValid(tf.getText()))){
@@ -168,8 +168,7 @@ public class GUi {
                     JOptionPane.showMessageDialog(frame, "not correct format");
                 }
             }
-        });
-
+        };
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -182,6 +181,7 @@ public class GUi {
 
             }
         };
+        sendDate.addActionListener(al2);
         tf.addActionListener(al);
         sendTask.addActionListener(al);
 

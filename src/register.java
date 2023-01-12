@@ -7,6 +7,13 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class register {
+    public static String createHash(String password){
+        int hash = 7;
+        for (int i = 0; i < password.length(); i++) {
+            hash = hash*31 + password.charAt(i);
+        }
+        return Integer.toString(hash);
+    }
     public static Boolean checkDupedUsername(String username) throws SQLException {
         ResultSet rs = TasksDatabase.retrieveUsername();
         rs.next();
@@ -52,7 +59,7 @@ public class register {
                 JOptionPane.showMessageDialog(frame,"username already exists");
             }
             else{
-                TasksDatabase.registerUser(tf.getText(),pWordtf.getText());
+                TasksDatabase.registerUser(tf.getText(),createHash(pWordtf.getText()));
                 frame.setVisible(false);
                 Login_in.login();
             }}catch(Exception e){
