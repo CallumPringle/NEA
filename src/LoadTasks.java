@@ -16,7 +16,7 @@ public class LoadTasks {
             String formattedDate = formatDate(rs.getString(2));
             x.setText(rs.getString(1)+" date: "+ formattedDate);
             panel.add(x);
-            GUi.checkCheckbox(x, frame);
+            CheckCheckbox.checkCheckbox(x, frame);
         }
     }
 }

@@ -33,7 +33,7 @@ public class GUi {
         frame.setSize(1000, 1000);
         return frame;
     }
-    public static void topMenu(JFrame frame){
+    public static JMenuBar topMenu(JFrame frame){
         JMenuBar mb = new JMenuBar();
         JMenu m1 = new JMenu("FILE");
         JMenu m2 = new JMenu("Help");
@@ -51,15 +51,16 @@ public class GUi {
             public void actionPerformed(ActionEvent actionEvent) {
                 JOptionPane.showMessageDialog(frame, "cope and seethe");
             }
-        });
+        });return mb;
     }
-    public static void leftMenubar(){
+    public static JMenuBar leftMenubar(){
         JMenuBar mb2 = new JMenuBar();
         JMenu m4325 = new JMenu("sussy");
         mb2.add(m4325);
         m4325.addSeparator();
+        return mb2;
     }
-    public static void bottomPanel(JFrame frame,JPanel panel2, String username){
+    public static JPanel bottomPanel(JFrame frame,JPanel panel2, String username){
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel label = new JLabel("enter task");
         JTextField tf = new JTextField(10); // accepts upto 10 characters
@@ -151,7 +152,7 @@ public class GUi {
         sendDate.addActionListener(al2);
         tf.addActionListener(al);
         sendTask.addActionListener(al);
-
+        return panel;
     }
     public static JPanel toDo(JFrame frame,String username){
         JPanel panel2 = new JPanel();
@@ -171,19 +172,14 @@ public class GUi {
     public static void gui(String username) {
         //Creating the Frame
         JFrame frame = createFrame();
-
         //top menu
-        topMenu(frame);
-
+        JMenuBar mb = topMenu(frame);
         //left menubar
-        leftMenubar();
-
+        JMenuBar mb2 = leftMenubar();
         //to do list
         JPanel panel2 = toDo(frame, username);
-
         //Creating the panel at bottom and adding components
-        bottomPanel(frame, panel2, username);
-
+        JPanel panel = bottomPanel(frame, panel2, username);
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.WEST, mb2);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
