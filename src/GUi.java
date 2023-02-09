@@ -35,17 +35,25 @@ public class GUi {
     }
     public static JMenuBar topMenu(JFrame frame){
         JMenuBar mb = new JMenuBar();
-        JMenu m1 = new JMenu("FILE");
+        JMenu m1 = new JMenu("Account");
         JMenu m2 = new JMenu("Help");
         m1.addSeparator();
         mb.add(m1);
         mb.add(m2);
         JMenuItem menuItem = new JMenuItem("cope");
-        JMenuItem m11 = new JMenuItem("Open");
+        JMenuItem m11 = new JMenuItem("Log Out");
         JMenuItem m22 = new JMenuItem("Save as");
         m2.add(menuItem);
         m1.add(m11);
         m1.add(m22);
+        m11.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.setVisible(false);
+                TextFile.WriteToFile("False","");
+                Login_in.login();
+            }
+        });
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -149,7 +157,6 @@ public class GUi {
 
             }
         };
-        sendDate.addActionListener(al2);
         tf.addActionListener(al);
         sendTask.addActionListener(al);
         return panel;

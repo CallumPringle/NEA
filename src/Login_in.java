@@ -19,8 +19,6 @@ import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 public class Login_in {
-    public static boolean loggedIn;
-    public static String username;
     public static void login() {
         JFrame frame = new JFrame("Login");
         frame.setSize(400,150);
@@ -68,7 +66,7 @@ public class Login_in {
                                 pw.next();
                                 if(Objects.equals(pw.getString(1), register.createHash(pWordtf.getText()))){
                                     frame.setVisible(false);
-
+                                    TextFile.WriteToFile("True",tf.getText());
                                     GUi.gui(tf.getText());
                                 }
                             }
