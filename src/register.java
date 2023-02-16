@@ -16,9 +16,13 @@ public class register {
     }
     public static Boolean checkDupedUsername(String username) throws SQLException {
         ResultSet rs = TasksDatabase.retrieveUsername();
-        rs.next();
-        return Objects.equals(username, rs.getString(1));
+        while((rs!=null) && (rs.next())){
+            if (Objects.equals(rs.getString(1), username)){
+                return true;
+            }
         }
+        return null;
+    }
 
 
     public static void rigster(){

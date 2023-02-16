@@ -157,6 +157,7 @@ public class GUi {
 
             }
         };
+        sendDate.addActionListener(al2);
         tf.addActionListener(al);
         sendTask.addActionListener(al);
         return panel;

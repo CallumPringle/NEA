@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class TextFile {
+
         public static void CreateFile(){
             try {
                 File myObj = new File("filename.txt");
