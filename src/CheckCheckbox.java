@@ -6,8 +6,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class CheckCheckbox {
-    static void checkCheckbox(JCheckBox x, JFrame frame) {
-        x.addItemListener(new ItemListener() {
+    static void checkCheckbox(JCheckBox checkbox, JFrame frame) {
+        checkbox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent itemEvent) {
                 if(itemEvent.getStateChange()==1){
@@ -17,8 +17,8 @@ public class CheckCheckbox {
                     yer.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent actionEvent) {
-                            TasksDatabase.deleteTask(x.getText().split(" date:")[0]);
-                            x.setVisible(false);
+                            TasksDatabase.deleteTask(checkbox.getText().split(" date:")[0]);
+                            checkbox.setVisible(false);
                             d.setVisible(false);
                         }
                     });

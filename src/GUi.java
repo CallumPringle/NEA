@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class GUi {
-    private static String text;
+    private static String taskText;
 
     public static void main(String[] args) {gui("test");}
 
@@ -30,8 +30,12 @@ public class GUi {
         JFrame frame = new JFrame("P.I.S.S");
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 1000);
+        frame.setSize(1920, 1080);
+        frame.setResizable(false);
         return frame;
+    }
+    public static void addCalendar(JFrame frame){
+        Calendar.createCalendar(frame);
     }
     public static JMenuBar topMenu(JFrame frame){
         JMenuBar mb = new JMenuBar();
@@ -110,12 +114,12 @@ public class GUi {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if(checkIfTimeIsValid(tf.getText())){
-                    text = text + " time: " + tf.getText();
-                    JCheckBox x = new JCheckBox();
-                    x.setText(text);
-                    panel2.add(x);
+                    taskText = taskText + " time: " + tf.getText();
+                    JCheckBox checkbox = new JCheckBox();
+                    checkbox.setText(taskText);
+                    panel2.add(checkbox);
                     panel2.add(Box.createVerticalGlue());
-                    CheckCheckbox.checkCheckbox(x, frame);
+                    CheckCheckbox.checkCheckbox(checkbox, frame);
                     tf.setText("");
                     label.setText("enter task");
                     sendTime.setVisible(false);
@@ -131,8 +135,8 @@ public class GUi {
             public void actionPerformed(ActionEvent actionEvent) {
                 if ((checkIfDateIsValid(tf.getText()))){
                     tasks task = new tasks(tf.getText(), tf.getText());
-                    TasksDatabase.tasksIntoDatabase(text,task,username);
-                    text = text + " date: " + tf.getText();
+                    TasksDatabase.tasksIntoDatabase(taskText,task,username);
+                    taskText = taskText + " date: " + tf.getText();
                     task.printDate();
                     System.out.println(task.getDate());
                     tf.setText("");
@@ -148,7 +152,7 @@ public class GUi {
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                text = tf.getText();
+                taskText = tf.getText();
                 panel2.add(Box.createVerticalGlue());
                 tf.setText("");
                 label.setText("enter date [dd/mm/yyyy}");
@@ -164,14 +168,18 @@ public class GUi {
     }
     public static JPanel toDo(JFrame frame,String username){
         JPanel panel2 = new JPanel();
-        BoxLayout boxlayout = new BoxLayout(panel2, BoxLayout.Y_AXIS);
-        panel2.setLayout(boxlayout);
+        panel2.setLayout(null);
+        panel2.setPreferredSize(new Dimension(frame.getWidth()/4,501));
         JLabel title = new JLabel("      Current Tasks:       ");
         panel2.add(title);
         panel2.setBackground(Color.decode("#00ffff"));
         panel2.setSize(frame.getWidth()/4, frame.getHeight());
         panel2.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.MAGENTA,2,true),"TO DO LIST"));
-        try{LoadTasks.loadCheckboxes(panel2,frame,username);}catch(Exception e){
+        JPanel todoBox = new JPanel();
+        todoBox.setPreferredSize(new Dimension(50,400));
+        JScrollPane scroller = new JScrollPane(todoBox);
+        panel2.add(scroller);
+        try{LoadTasks.loadCheckboxes(todoBox,frame,username);}catch(Exception e){
             System.out.println(e);
         }
         return panel2;
@@ -180,6 +188,8 @@ public class GUi {
     public static void gui(String username) {
         //Creating the Frame
         JFrame frame = createFrame();
+        //adding the calendar
+        addCalendar(frame);
         //top menu
         JMenuBar mb = topMenu(frame);
         //left menubar

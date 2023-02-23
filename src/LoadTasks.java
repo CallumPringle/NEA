@@ -12,11 +12,11 @@ public class LoadTasks {
     public static void loadCheckboxes(JPanel panel, JFrame frame, String username) throws SQLException {
         ResultSet rs = TasksDatabase.loadTasks(username);
         while((rs!=null) && (rs.next())){
-            JCheckBox x = new JCheckBox();
+            JCheckBox checkbox = new JCheckBox();
             String formattedDate = formatDate(rs.getString(2));
-            x.setText(rs.getString(1)+" date: "+ formattedDate);
-            panel.add(x);
-            CheckCheckbox.checkCheckbox(x, frame);
+            checkbox.setText(rs.getString(1)+" date: "+ formattedDate);
+            panel.add(checkbox);
+            CheckCheckbox.checkCheckbox(checkbox, frame);
         }
     }
 }

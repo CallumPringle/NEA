@@ -3,13 +3,23 @@ public class tasks {
     public int day;
     public int month;
     public int year;
+    public String taskText;
 
     public tasks(String text,String date) {
         this.date = date;
+        this.taskText = text;
         String[] triPoloski  = text.split("/");
         this.day = Integer.parseInt(triPoloski[0]);
         this.month = Integer.parseInt(triPoloski[1]);
         this.year = Integer.parseInt(triPoloski[2]);
+    }
+
+    public String getTaskText() {
+        return taskText;
+    }
+
+    public void setTaskText(String taskText) {
+        this.taskText = taskText;
     }
 
     public String getDate() {
