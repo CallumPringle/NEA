@@ -1,7 +1,4 @@
 package Tasks;
-
-import Tasks.tasks;
-
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -63,7 +60,6 @@ public class TasksDatabase {
     }
     public static void tasksIntoDatabase(String task, tasks tasks, String username){
         try {
-            LocalDate.of(2004,12,31);
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
             Connection conn = DriverManager.getConnection("jdbc:ucanaccess://src/Tasks.accdb");//Establishing Connection
             PreparedStatement pstmt = conn.prepareStatement("insert into tasksTable (ID,taskDetail,taskDate,username) values(null,'"+task+"','"+LocalDate.of(tasks.getYear(),tasks.getMonth(),tasks.getDay())+"','"+username+"')");

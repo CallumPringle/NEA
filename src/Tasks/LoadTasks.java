@@ -1,8 +1,5 @@
 package Tasks;
-
 import GUI.mainGUI;
-import Tasks.CheckCheckbox;
-
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,8 +1,6 @@
 package Login;
-
 import GUI.mainGUI;
 import Tasks.TasksDatabase;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

@@ -1,8 +1,5 @@
 package Login;
-
-import Login.Login_in;
 import Tasks.TasksDatabase;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -82,9 +79,5 @@ public class register {
     Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation((size.width/2-(frame.getWidth()/2)),(size.height/2-(frame.getHeight()/2)));
         frame.setVisible(true);
-}
+}}
 
-    public static void main(String[] args) {
-        rigster();
-    }
-}

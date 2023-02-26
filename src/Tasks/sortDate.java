@@ -55,11 +55,11 @@ public class sortDate {
         merge(left_arr,right_arr,arr,mid,len-mid);
     }
 
-    public static void main( String args[] ) {
+   /* public static void main( String args[] ) {
         String [] array = {"31/12/2004","10/12/2004","01/02/2005","21/05/1998","20/01/2020", "31/12/2004"};
         mergeSort(array,array.length);
         for(int i =0; i< array.length;++i){
             System.out.print(array[i]+ " ");
         }
-    }
+    }*/
 }
