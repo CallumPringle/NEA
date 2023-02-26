@@ -1,3 +1,8 @@
+package Tasks;
+
+import GUI.mainGUI;
+import Tasks.CheckCheckbox;
+
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +19,9 @@ public class LoadTasks {
         while((rs!=null) && (rs.next())){
             JCheckBox checkbox = new JCheckBox();
             String formattedDate = formatDate(rs.getString(2));
-            checkbox.setText(rs.getString(1)+" date: "+ formattedDate);
+            String task = rs.getString(1)+" date: "+ formattedDate;
+            mainGUI.curTasks.put(formattedDate, rs.getString(1));
+            checkbox.setText(task);
             panel.add(checkbox);
             CheckCheckbox.checkCheckbox(checkbox, frame);
         }
