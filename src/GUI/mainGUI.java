@@ -52,7 +52,7 @@ public class mainGUI {
     public static void addCalendar(JFrame frame){
         Calendar.createCalendar(frame);
     }
-    public static JMenuBar topMenu(JFrame frame){
+    public static JMenuBar topMenu(JFrame frame, JPanel toDoBox){
         JMenuBar mb = new JMenuBar();
         JMenu m1 = new JMenu("Account");
         JMenu m2 = new JMenu("Help");
@@ -61,11 +61,16 @@ public class mainGUI {
         mb.add(m2);
         JMenuItem menuItem = new JMenuItem("cope");
         JMenuItem m11 = new JMenuItem("Log Out");
-        JMenuItem m22 = new JMenuItem("Delete all Tasks");
+        JMenuItem m22 = new JMenuItem("sort tasks");
         m2.add(menuItem);
         m1.add(m11);
         m1.add(m22);
-
+        m22.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sortTasks(toDoBox,frame);
+            }
+        });
         m11.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -85,12 +90,12 @@ public class mainGUI {
         toDoBox.removeAll();
         String[] taskDates = curTasks.keySet().toArray(new String[0]);
         sortDate.mergeSort(taskDates, curTasks.size());
-        frame.repaint();
         for (int i = 0; i < curTasks.size(); i++) {
             JCheckBox checkBox = new JCheckBox(curTasks.get(taskDates[i]) + " date: " + taskDates[i]);
             toDoBox.add(checkBox);
             CheckCheckbox.checkCheckbox(checkBox, frame);
         }
+        frame.repaint();
     }
     public static JPanel bottomPanel(JFrame frame,JPanel panel2, String username, JPanel toDoBox){
         JPanel panel = new JPanel(); // the panel is not visible in output
@@ -194,11 +199,11 @@ public class mainGUI {
         JFrame frame = createFrame(username);
         //adding the calendar
         addCalendar(frame);
-        //top menu
-        JMenuBar mb = topMenu(frame);
         //to do list
         Pair<JPanel, JPanel> panel2_toDoBox = toDo(frame, username);
         //Creating the panel at bottom and adding components
+        //top menu
+        JMenuBar mb = topMenu(frame, panel2_toDoBox.getValue());
         JPanel panel = bottomPanel(frame, panel2_toDoBox.getKey(), username,panel2_toDoBox.getValue());
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
