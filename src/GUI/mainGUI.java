@@ -55,23 +55,19 @@ public class mainGUI {
     public static JMenuBar topMenu(JFrame frame, JPanel toDoBox){
         JMenuBar mb = new JMenuBar();
         JMenu m1 = new JMenu("Account");
-        JMenu m2 = new JMenu("Help");
         m1.addSeparator();
         mb.add(m1);
-        mb.add(m2);
-        JMenuItem menuItem = new JMenuItem("cope");
-        JMenuItem m11 = new JMenuItem("Log Out");
-        JMenuItem m22 = new JMenuItem("sort tasks");
-        m2.add(menuItem);
-        m1.add(m11);
-        m1.add(m22);
-        m22.addActionListener(new ActionListener() {
+        JMenuItem logout = new JMenuItem("Log Out");
+        JMenuItem sort = new JMenuItem("Sort tasks");
+        m1.add(logout);
+        m1.add(sort);
+        sort.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sortTasks(toDoBox,frame);
             }
         });
-        m11.addActionListener(new ActionListener() {
+        logout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 frame.setVisible(false);
@@ -79,12 +75,7 @@ public class mainGUI {
                 Login_in.login();
             }
         });
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(frame, "cope and seethe");
-            }
-        });return mb;
+        return mb;
     }
     public static void sortTasks(JPanel toDoBox, JFrame frame){
         toDoBox.removeAll();
