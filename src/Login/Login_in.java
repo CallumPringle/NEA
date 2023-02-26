@@ -59,7 +59,7 @@ public class Login_in {
                                     frame.setVisible(false);
                                     TextFile.WriteToFile("True",tf.getText());
                                     mainGUI.gui(tf.getText());
-                                }
+                                }else{JOptionPane.showMessageDialog(frame,"password is incorrect");}
                             }
                         }
                     } catch (SQLException e) {

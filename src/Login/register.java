@@ -23,7 +23,7 @@ public class register {
                 return true;
             }
         }
-        return null;
+        return false;
     }
 
 
@@ -69,7 +69,7 @@ public class register {
                 frame.setVisible(false);
                 Login_in.login();
             }}catch(Exception e){
-                System.out.println(e);
+                System.out.println(e + "error here");
             }
         }
     });
