@@ -1,3 +1,5 @@
+package GUI;
+
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
@@ -57,11 +59,11 @@ public class Calendar{
 
         //Set bounds
         //stblCalendar(width: 300, height: 250)
-        stblCalendar.setBounds(10, 75, (int) Math.round(frame.getWidth()*0.70), (int) Math.round(frame.getHeight()*0.82));
+        stblCalendar.setBounds(10, 75, (int) Math.round(frame.getWidth()*0.72), (int) Math.round(frame.getHeight()*0.82));
         lblYear.setBounds(30, 880, (int) Math.round(stblCalendar.getWidth()/3.75),  stblCalendar.getWidth()/15);
         cmbYear.setBounds(350, 880,  (int) Math.round(stblCalendar.getWidth()/3.75), stblCalendar.getWidth()/20);
         btnPrev.setBounds(10, 25, stblCalendar.getWidth()/12, stblCalendar.getHeight()/20);
-        btnNext.setBounds((int) Math.round(frame.getWidth()*0.64), 25, stblCalendar.getWidth()/12, stblCalendar.getHeight()/20);
+        btnNext.setBounds((int) Math.round(frame.getWidth()*0.66), 25, stblCalendar.getWidth()/12, stblCalendar.getHeight()/20);
 
 
         //Get real month/year
@@ -117,7 +119,7 @@ public class Calendar{
         lblMonth.setText(months[month]); //Refresh the month label (at the top)
         lblMonth.setFont(new Font(Font.SERIF,Font.BOLD, 50));
         lblYear.setFont(new Font(Font.SERIF,Font.BOLD, 50));
-        lblMonth.setBounds((frame.getWidth()/2)-385, 0, (int) Math.round(stblCalendar.getWidth()/1.5), stblCalendar.getHeight()/10); //Re-align label with calendar
+        lblMonth.setBounds((frame.getWidth()/2)-365, 0, (int) Math.round(stblCalendar.getWidth()/1.5), stblCalendar.getHeight()/10); //Re-align label with calendar
         cmbYear.setSelectedItem(String.valueOf(year)); //Select the correct year in the combo box
         cmbYear.setFont(new Font(Font.SERIF,Font.BOLD, 30));
         //Clear table

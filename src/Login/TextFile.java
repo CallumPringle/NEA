@@ -1,3 +1,5 @@
+package Login;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -5,10 +7,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class TextFile {
-
         public static void CreateFile(){
             try {
-                File myObj = new File("filename.txt");
+                File myObj = new File("TextStore.txt");
                 if (myObj.createNewFile()) {
                     System.out.println("File created: " + myObj.getName());
                 } else {
@@ -21,7 +22,7 @@ public class TextFile {
         }
         public static void WriteToFile(String loggedIn, String username){
             try {
-                FileWriter myWriter = new FileWriter("filename.txt");
+                FileWriter myWriter = new FileWriter("TextStore.txt");
                 myWriter.write(loggedIn + "," + username);
                 myWriter.close();
                 System.out.println("Successfully wrote to the file.");
@@ -32,7 +33,7 @@ public class TextFile {
         }
         public static String ReadFile() {
             try {
-                File myObj = new File("filename.txt");
+                File myObj = new File("TextStore.txt");
                 Scanner myReader = new Scanner(myObj);
                 while (myReader.hasNextLine()) {
                     return myReader.nextLine();

@@ -1,3 +1,5 @@
+package Tasks;
+
 public class tasks {
     public String date;
     public int day;
@@ -8,7 +10,7 @@ public class tasks {
     public tasks(String text,String date) {
         this.date = date;
         this.taskText = text;
-        String[] triPoloski  = text.split("/");
+        String[] triPoloski  = date.split("/");
         this.day = Integer.parseInt(triPoloski[0]);
         this.month = Integer.parseInt(triPoloski[1]);
         this.year = Integer.parseInt(triPoloski[2]);

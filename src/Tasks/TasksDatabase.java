@@ -1,3 +1,7 @@
+package Tasks;
+
+import Tasks.tasks;
+
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -57,7 +61,7 @@ public class TasksDatabase {
             System.out.println(e);
         }
     }
-    public static void tasksIntoDatabase(String task,tasks tasks, String username){
+    public static void tasksIntoDatabase(String task, tasks tasks, String username){
         try {
             LocalDate.of(2004,12,31);
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver

@@ -1,3 +1,5 @@
+package Tasks;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,7 +8,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class CheckCheckbox {
-    static void checkCheckbox(JCheckBox checkbox, JFrame frame) {
+    public static void checkCheckbox(JCheckBox checkbox, JFrame frame) {
         checkbox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent itemEvent) {

@@ -1,3 +1,8 @@
+package Login;
+
+import GUI.mainGUI;
+import Tasks.TasksDatabase;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -55,7 +60,7 @@ public class Login_in {
                                 if(Objects.equals(pw.getString(1), register.createHash(pWordtf.getText()))){
                                     frame.setVisible(false);
                                     TextFile.WriteToFile("True",tf.getText());
-                                    GUi.gui(tf.getText());
+                                    mainGUI.gui(tf.getText());
                                 }
                             }
                         }

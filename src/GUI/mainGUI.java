@@ -1,16 +1,35 @@
+package GUI;
+
+import Login.Login_in;
+import Login.TextFile;
+import Tasks.*;
+import javafx.util.Pair;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Objects;
 
-public class GUi {
+public class mainGUI {
     private static String taskText;
-
+    public static HashMap<String, String> curTasks = new HashMap<String,String>();
     public static void main(String[] args) {gui("test");}
+    public static boolean isDatePast(String date) {
+        LocalDate localDate = LocalDate.now(ZoneId.systemDefault());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate inputDate = LocalDate.parse(date, dtf);
+        return inputDate.isBefore(localDate);
+    }
+
 
     private static boolean checkIfDateIsValid(String date) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -22,12 +41,8 @@ public class GUi {
         }
         return true;
     }
-    public static Boolean checkIfTimeIsValid(String time){
-        String[] splitTime = time.split(":");
-        return Integer.parseInt(splitTime[0]) <= 23 && Integer.parseInt(splitTime[1]) <= 59 && Integer.parseInt(splitTime[0]) >= 0 && Integer.parseInt(splitTime[1]) >= 0;
-    }
-    public static JFrame createFrame(){
-        JFrame frame = new JFrame("P.I.S.S");
+    public static JFrame createFrame(String username){
+        JFrame frame = new JFrame("Logged in as " + username);
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1920, 1080);
@@ -46,10 +61,11 @@ public class GUi {
         mb.add(m2);
         JMenuItem menuItem = new JMenuItem("cope");
         JMenuItem m11 = new JMenuItem("Log Out");
-        JMenuItem m22 = new JMenuItem("Save as");
+        JMenuItem m22 = new JMenuItem("Delete all Tasks");
         m2.add(menuItem);
         m1.add(m11);
         m1.add(m22);
+
         m11.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -65,32 +81,33 @@ public class GUi {
             }
         });return mb;
     }
-    public static JMenuBar leftMenubar(){
-        JMenuBar mb2 = new JMenuBar();
-        JMenu m4325 = new JMenu("sussy");
-        mb2.add(m4325);
-        m4325.addSeparator();
-        return mb2;
+    public static void sortTasks(JPanel toDoBox, JFrame frame){
+        toDoBox.removeAll();
+        String[] taskDates = curTasks.keySet().toArray(new String[0]);
+        sortDate.mergeSort(taskDates, curTasks.size());
+        frame.repaint();
+        for (int i = 0; i < curTasks.size(); i++) {
+            JCheckBox checkBox = new JCheckBox(curTasks.get(taskDates[i]) + " date: " + taskDates[i]);
+            toDoBox.add(checkBox);
+            CheckCheckbox.checkCheckbox(checkBox, frame);
+        }
     }
-    public static JPanel bottomPanel(JFrame frame,JPanel panel2, String username){
+    public static JPanel bottomPanel(JFrame frame,JPanel panel2, String username, JPanel toDoBox){
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel label = new JLabel("enter task");
         JTextField tf = new JTextField(10); // accepts upto 10 characters
         JButton sendTask = new JButton("Send");
         JButton sendDate = new JButton("Send");
-        JButton sendTime = new JButton("Send");
         JButton reset = new JButton("Reset");
         panel.add(label); // Components Added using Flow Layout
         panel.add(tf);
         panel.add(sendTask);
         panel.add(sendDate);
-        panel.add(sendTime);
         panel.add(reset);
         tf.setVisible(false);
         reset.setVisible(false);
         sendTask.setVisible(false);
         sendDate.setVisible(false);
-        sendTime.setVisible(false);
         label.setVisible(false);
         JButton newToDo = new JButton("new task");
         panel.add(newToDo);
@@ -110,50 +127,33 @@ public class GUi {
                 tf.setText("");
             }
         });
-        sendTime.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if(checkIfTimeIsValid(tf.getText())){
-                    taskText = taskText + " time: " + tf.getText();
-                    JCheckBox checkbox = new JCheckBox();
-                    checkbox.setText(taskText);
-                    panel2.add(checkbox);
-                    panel2.add(Box.createVerticalGlue());
-                    CheckCheckbox.checkCheckbox(checkbox, frame);
-                    tf.setText("");
-                    label.setText("enter task");
-                    sendTime.setVisible(false);
-                    sendTask.setVisible(true);
-                }
-                else{
-                    JOptionPane.showMessageDialog(frame, "not correct format");
-                }
-            }
-        });
         ActionListener al2 = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if ((checkIfDateIsValid(tf.getText()))){
-                    tasks task = new tasks(tf.getText(), tf.getText());
-                    TasksDatabase.tasksIntoDatabase(taskText,task,username);
-                    taskText = taskText + " date: " + tf.getText();
-                    task.printDate();
-                    System.out.println(task.getDate());
-                    tf.setText("");
-                    label.setText("enter time (hh:mm)");
-                    sendTime.setVisible(true);
-                    sendDate.setVisible(false);
+                if(!isDatePast(tf.getText())){
+                    if (checkIfDateIsValid(tf.getText())) {
+                        tasks task = new tasks(taskText, tf.getText());
+                        curTasks.put(tf.getText(),taskText);
+                        JCheckBox checkbox = new JCheckBox(taskText + " date: " + tf.getText());
+                        CheckCheckbox.checkCheckbox(checkbox,frame);
+                        toDoBox.add(checkbox);
+                        sortTasks(toDoBox, frame);
+                        TasksDatabase.tasksIntoDatabase(taskText, task, username);
+                        tf.setText("");
+                        label.setText("enter task");
+                        sendTask.setVisible(true);
+                        sendDate.setVisible(false);
+                    }else{
+                            JOptionPane.showMessageDialog(frame, "not correct date format");
+                    }
+                }else{JOptionPane.showMessageDialog(frame, "Date is in the past");}
                 }
-                else{
-                    JOptionPane.showMessageDialog(frame, "not correct format");
-                }
-            }
+
         };
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 taskText = tf.getText();
-                panel2.add(Box.createVerticalGlue());
                 tf.setText("");
                 label.setText("enter date [dd/mm/yyyy}");
                 sendTask.setVisible(false);
@@ -162,13 +162,12 @@ public class GUi {
             }
         };
         sendDate.addActionListener(al2);
-        tf.addActionListener(al);
         sendTask.addActionListener(al);
         return panel;
     }
-    public static JPanel toDo(JFrame frame,String username){
+    public static Pair<JPanel, JPanel> toDo(JFrame frame, String username){
         JPanel panel2 = new JPanel();
-        panel2.setLayout(null);
+        panel2.setLayout(new FlowLayout());
         panel2.setPreferredSize(new Dimension(frame.getWidth()/4,501));
         JLabel title = new JLabel("      Current Tasks:       ");
         panel2.add(title);
@@ -176,33 +175,35 @@ public class GUi {
         panel2.setSize(frame.getWidth()/4, frame.getHeight());
         panel2.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.MAGENTA,2,true),"TO DO LIST"));
         JPanel todoBox = new JPanel();
-        todoBox.setPreferredSize(new Dimension(50,400));
-        JScrollPane scroller = new JScrollPane(todoBox);
+        todoBox.setPreferredSize(new Dimension(frame.getWidth(),850));
+        todoBox.setLayout(new BoxLayout(todoBox, BoxLayout.PAGE_AXIS));
+        JScrollPane scroller = new JScrollPane(todoBox, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroller.setPreferredSize(new Dimension(frame.getWidth()/4 - 50,900));
         panel2.add(scroller);
-        try{LoadTasks.loadCheckboxes(todoBox,frame,username);}catch(Exception e){
+        todoBox.setVisible(true);
+        scroller.setVisible(true);
+        try{
+            LoadTasks.loadCheckboxes(todoBox,frame,username);}catch(Exception e){
             System.out.println(e);
         }
-        return panel2;
+        return new Pair<JPanel, JPanel>(panel2, todoBox);
     }
 
     public static void gui(String username) {
         //Creating the Frame
-        JFrame frame = createFrame();
+        JFrame frame = createFrame(username);
         //adding the calendar
         addCalendar(frame);
         //top menu
         JMenuBar mb = topMenu(frame);
-        //left menubar
-        JMenuBar mb2 = leftMenubar();
         //to do list
-        JPanel panel2 = toDo(frame, username);
+        Pair<JPanel, JPanel> panel2_toDoBox = toDo(frame, username);
         //Creating the panel at bottom and adding components
-        JPanel panel = bottomPanel(frame, panel2, username);
+        JPanel panel = bottomPanel(frame, panel2_toDoBox.getKey(), username,panel2_toDoBox.getValue());
         //Adding Components to the frame.
-        frame.getContentPane().add(BorderLayout.WEST, mb2);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.getContentPane().add(BorderLayout.NORTH, mb);
-        frame.getContentPane().add(BorderLayout.EAST, panel2);
+        frame.getContentPane().add(BorderLayout.EAST, panel2_toDoBox.getKey());
         frame.setVisible(true);
 
         }
