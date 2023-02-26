@@ -123,8 +123,8 @@ public class mainGUI {
         ActionListener al2 = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(!isDatePast(tf.getText())){
-                    if (checkIfDateIsValid(tf.getText())) {
+                if (checkIfDateIsValid(tf.getText())) {
+                    if(!isDatePast(tf.getText())){
                         tasks task = new tasks(taskText, tf.getText());
                         curTasks.put(tf.getText(),taskText);
                         JCheckBox checkbox = new JCheckBox(taskText + " date: " + tf.getText());
@@ -137,9 +137,9 @@ public class mainGUI {
                         sendTask.setVisible(true);
                         sendDate.setVisible(false);
                     }else{
-                            JOptionPane.showMessageDialog(frame, "not correct date format");
+                            JOptionPane.showMessageDialog(frame, "Date is in the past");
                     }
-                }else{JOptionPane.showMessageDialog(frame, "Date is in the past");}
+                }else{JOptionPane.showMessageDialog(frame, "Date is not valid");}
                 }
 
         };
